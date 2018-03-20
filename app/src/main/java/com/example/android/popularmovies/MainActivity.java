@@ -126,6 +126,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             return;
         }
         try {
+            recyclerView.setVisibility(View.VISIBLE);
+            showErrorMessage.setVisibility(View.INVISIBLE);
             ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
             Call<MovieResponse> call = apiService.getMovies(preference, Constants.API_KEY);
             Log.d(TAG, "url: " + call.request().url().toString());
@@ -139,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
                         if (mMovieAdapter == null) {
                             recyclerView.setAdapter(new MovieAdapter(movies, R.layout.linearlayout_movies, getApplicationContext()));
-                            recyclerView.setHasFixedSize(true);
+                            recyclerView.setHasFixedSize(false);
                         } else {
                             mMovieAdapter.updateRecyclerData(movies);
                             mMovieAdapter.notifyDataSetChanged();
