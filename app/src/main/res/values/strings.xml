@@ -33,5 +33,6 @@
     <string name="no_internet_error">No network available, please check your WiFi or Data connection</string>
     <string name="api_missing_error">Please obtain your API KEY from themovie.org first!</string>
     <string name="refresh_news">Refresh</string>
+    <string name="star_image">Star image</string>
 
 </resources>
