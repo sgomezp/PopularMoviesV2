@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="error_text_size_25">25sp</dimen>
+    <dimen name="height_120">120dp</dimen>
+    <dimen name="text_size_title">30sp</dimen>
+    <dimen name="margin_5">5dp</dimen>
+    <dimen name="margin_10">10dp</dimen>
+    <dimen name="width_poster">170dp</dimen>
+    <dimen name="height_poster">255dp</dimen>
+    <dimen name="height_100">100dp</dimen>
+    <dimen name="elevation">4dp</dimen>
+</resources>

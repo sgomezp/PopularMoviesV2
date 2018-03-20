@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="release_date_label">Release date:</string>
+    <string name="overview_label">Synopsis</string>
+    <string name="no_internet_error">No Internet Connection</string>
+    <string name="refresh_news">Refresh</string>
+</resources>

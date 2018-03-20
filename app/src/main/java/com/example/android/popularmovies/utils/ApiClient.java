@@ -23,7 +23,7 @@ public class ApiClient {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-        Log.d(TAG, "retrofit es: " + retrofit.toString());
+        Log.d(TAG, "retrofit es: " + retrofit);
         return  retrofit;
 
     }

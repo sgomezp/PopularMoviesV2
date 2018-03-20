@@ -6,35 +6,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/appbar"
-        layout="@layout/app_bar"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_movies"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize" />
-
-    <TextView
-        android:id="@+id/show_error_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center_horizontal"
-        android:textSize="@dimen/error_text_size_25"
-        android:visibility="invisible"
-        tools:text="No Internet Connection" />
+        android:layout_height="match_parent" />
 
 
     <!-- Loading indicator is only shown before the first load -->
-    <ProgressBar
+    <!--<ProgressBar
         android:id="@+id/loading_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
-
+        android:layout_gravity="center"
+        android:visibility="gone" />
+-->
 </FrameLayout>

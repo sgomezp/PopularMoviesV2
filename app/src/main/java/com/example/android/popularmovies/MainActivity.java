@@ -5,13 +5,17 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.android.popularmovies.model.MovieResponse;
 import com.example.android.popularmovies.model.Movies;
@@ -19,6 +23,7 @@ import com.example.android.popularmovies.utils.ApiClient;
 import com.example.android.popularmovies.utils.ApiInterface;
 import com.example.android.popularmovies.utils.Constants;
 import com.example.android.popularmovies.utils.MovieAdapter;
+import com.example.android.popularmovies.utils.NetworkUtils;
 
 import java.util.List;
 
@@ -33,113 +38,153 @@ import retrofit2.Response;
  * https://www.androidhive.info/2016/05/android-working-with-retrofit-http-library/
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+    //LOG_TAG for debugging purposes
     private static final String TAG = MainActivity.class.getSimpleName();
-    public int typeOfSort = 0;
-
-
+    public static List<Movies> movies;
     RecyclerView recyclerView;
-    RecyclerView.Adapter mAdapter;
+    MovieAdapter.ViewHolder mAdapter;
+    MovieAdapter mMovieAdapter;
     RecyclerView.LayoutManager layoutManager;
     Call<MovieResponse> sort = null;
-
+    String preference;
+    TextView showErrorMessage;
+    private ProgressBar loadingIndicator;
 
 
     /*
      * References to RecyclerView and Adapter to reset the list to its
      * "pretty" state when the reset menu item is clicked.
      */
-    //private MovieAdapter mAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        /*final RecyclerView recyclerView;
-        final RecyclerView.Adapter mAdapter;
-        RecyclerView.LayoutManager layoutManager;
-        Call<MovieResponse> sort = null;*/
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar myToolbar = findViewById(R.id.toolbar);
 
-        recyclerView = (RecyclerView) findViewById(R.id.rv_movies);
+        if (myToolbar != null) {
+            setSupportActionBar(myToolbar);
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.show();
+            }
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        }
+
+
+        loadingIndicator = findViewById(R.id.loading_indicator);
+        loadingIndicator.setVisibility(View.VISIBLE);
+
+        showErrorMessage = findViewById(R.id.show_error_message);
+        showErrorMessage.setVisibility(View.INVISIBLE);
+
+
+        recyclerView = findViewById(R.id.rv_movies);
         Resources res = getResources();
         int numbersOfColumns = res.getInteger(R.integer.list_columns);
 
-        recyclerView.setHasFixedSize(true);
-
         // use a gridLayout manager
         layoutManager = new GridLayoutManager(this, numbersOfColumns);
         recyclerView.setLayoutManager(layoutManager);
 
-        final ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        sort = apiService.getMoviePopular(Constants.API_KEY);
+        preference = choosePreferences();
 
-        PreferenceManager.setDefaultValues(this, R.xml.settings_main, false);
+        //loadingIndicator.setVisibility(View.VISIBLE);
+        updateDisplayPreferences(preference);
 
+    }
 
+    private String choosePreferences() {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        final String  orderBy = sharedPrefs.getString(
+        String preference = sharedPrefs.getString(
                 getString(R.string.settings_order_by_key),
                 getString(R.string.settings_order_by_default));
-        Log.d(TAG, "orderBy es: "+ orderBy);
 
-            if(orderBy.equals("top")){
-                sort = apiService.getTopRatedMovies(Constants.API_KEY);
-            }else if(orderBy.equals("popular")){
-                sort = apiService.getMoviePopular(Constants.API_KEY);
-            }
+        Log.d(TAG, "orderBy es: " + preference);
 
+        if (preference.equals("top")) {
+            preference = Constants.URL_TOP_RATED;
+            getSupportActionBar().setSubtitle("Top Rated");
+        } else if (preference.equals("popular")) {
+            preference = Constants.URL_POPULAR_MOVIES;
+            getSupportActionBar().setSubtitle("Populars");
+        }
+        return preference;
+    }
 
-            Log.d(TAG, "TypeOfSort: " + typeOfSort);
+    // ****************************************************************************************************
+    private void updateDisplayPreferences(final String preference) {
 
 
         if (Constants.API_KEY.isEmpty()) {
-            Toast.makeText(getApplicationContext(),
-                    "Please obtain your API KEY from themovie.org first!", Toast.LENGTH_LONG).show();
+            showMessage(getString(R.string.api_missing_error));
             return;
         }
+        try {
+            ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+            Call<MovieResponse> call = apiService.getMovies(preference, Constants.API_KEY);
+            Log.d(TAG, "url: " + call.request().url().toString());
+            call.enqueue(new Callback<MovieResponse>() {
+                @Override
+                public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                    int statusCode = response.code();
+                    if (response.isSuccessful()) {
+                        loadingIndicator.setVisibility(View.INVISIBLE);
+                        movies = response.body().getResults();
 
-        recyclerView = findViewById(R.id.rv_movies);
+                        if (mMovieAdapter == null) {
+                            recyclerView.setAdapter(new MovieAdapter(movies, R.layout.linearlayout_movies, getApplicationContext()));
+                            recyclerView.setHasFixedSize(true);
+                        } else {
+                            mMovieAdapter.updateRecyclerData(movies);
+                            mMovieAdapter.notifyDataSetChanged();
+                        }
+                    } else {
+                        showMessage(getString(R.string.no_internet_error));
+                    }
+                }
 
-        /*Resources res = getResources();
-        int numbersOfColumns = res.getInteger(R.integer.list_columns);*/
+                @Override
+                public void onFailure(Call<MovieResponse> call, Throwable t) {
+                    // Log error here since request failed
+                    showMessage(getString(R.string.no_internet_error));
 
-        recyclerView.setHasFixedSize(true);
+                }
+            });
+        } catch (Exception e) {
+            showMessage(getString(R.string.no_internet_error));
+        }
+    }
 
-        // use a gridLayout manager
-        layoutManager = new GridLayoutManager(this, numbersOfColumns);
-        recyclerView.setLayoutManager(layoutManager);
+    private void showMessage(String msg) {
 
+        loadingIndicator.setVisibility(View.INVISIBLE);
+        recyclerView.setVisibility((View.INVISIBLE));
+        showErrorMessage.setText(msg);
+        showErrorMessage.setVisibility(View.VISIBLE);
+    }
 
-        //ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<MovieResponse> call = sort;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(this);
+    }
 
-
-        final RecyclerView finalRecyclerView = recyclerView;
-        call.enqueue(new Callback<MovieResponse>() {
-            @Override
-            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-                int statusCode = response.code();
-                List<Movies> movies = response.body().getResults();
-                finalRecyclerView.setAdapter(new MovieAdapter(movies, R.layout.linearlayout_movies, getApplicationContext()));
-            }
-
-
-            @Override
-            public void onFailure(Call<MovieResponse> call, Throwable t) {
-                // Log error here since request failed
-                Log.e(TAG, t.toString());
-
-            }
-        });
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        preference = choosePreferences();
+        updateDisplayPreferences(preference);
     }
 
 
     //Handle menu
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu options from the res/menu/menu_main.xml file.
@@ -153,16 +198,34 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        if (id == R.id.action_settings){
-            Intent settingsIntent = new Intent(this, SettingActivity.class);
-            startActivity(settingsIntent);
-            return true;
+        switch (id) {
+            case R.id.menu_refresh:
+                if (NetworkUtils.isConnected(this)) {
+                    Log.d(TAG, "Estoy en refresh");
+                    //I don't know what to use here
+
+                }
+
+                break;
+            case R.id.action_settings:
+                Intent settingsIntent = new Intent(this, SettingActivity.class);
+                startActivity(settingsIntent);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
+
         return super.onOptionsItemSelected(item);
-
-
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String value) {
+        Log.d(TAG, "value: " + value);
+        if (value.equals(getString(R.string.settings_order_by_key))) {
+            Log.d(TAG, "Entré al onSharedPreference " + getString(R.string.settings_order_by_key));
+        }
+
+    }
 }
 
 

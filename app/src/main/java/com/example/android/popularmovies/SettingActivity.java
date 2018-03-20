@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 /**
  * Created by sgomezp on 08/03/2018.
@@ -17,6 +19,21 @@ public class SettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
+
+        Toolbar myToolbar = findViewById(R.id.toolbar);
+
+        if (myToolbar != null) {
+            setSupportActionBar(myToolbar);
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.show();
+            }
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        }
+
     }
 
     public static  class MoviesPreferenceFragment extends PreferenceFragment implements

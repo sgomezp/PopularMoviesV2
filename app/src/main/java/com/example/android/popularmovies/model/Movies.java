@@ -74,34 +74,6 @@ public class Movies {
     }
 
 
-// ******************  Eliminar esto después ********************
 
-   /* public Movies(int title,int synopsis, int imageResource, String imageUrl){
-        this.mTitle = title;
-        this.mSynopsis = synopsis;
-        this.mImageResource = imageResource;
-        this.mImageUrl = imageUrl;
-    }
 
-    public int getTitle(){
-
-        return mTitle;
-    }
-
-    public int getSynopsis(){
-
-        return mSynopsis;
-    }
-
-    public int getImageResource(){
-        return mImageResource;
-    }
-
-    public String getImageUrl() {
-        return mImageUrl;
-    }
-
-    public void setImageResource(int imageResource){
-        mImageResource = imageResource;
-    }*/
 }
