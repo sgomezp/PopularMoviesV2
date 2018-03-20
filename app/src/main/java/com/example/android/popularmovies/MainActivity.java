@@ -202,7 +202,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             case R.id.menu_refresh:
                 if (NetworkUtils.isConnected(this)) {
                     Log.d(TAG, "Estoy en refresh");
-                    //I don't know what to use here
+                    updateDisplayPreferences(preference); //this doesn't works
+                    //I don't know what to use here!!
 
                 }
 
