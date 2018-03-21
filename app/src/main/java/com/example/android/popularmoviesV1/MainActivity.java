@@ -1,4 +1,4 @@
-package com.example.android.popularmovies;
+package com.example.android.popularmoviesV1;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,13 +17,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.android.popularmovies.model.MovieResponse;
-import com.example.android.popularmovies.model.Movies;
-import com.example.android.popularmovies.utils.ApiClient;
-import com.example.android.popularmovies.utils.ApiInterface;
-import com.example.android.popularmovies.utils.Constants;
-import com.example.android.popularmovies.utils.MovieAdapter;
-import com.example.android.popularmovies.utils.NetworkUtils;
+import com.example.android.popularmoviesV1.model.MovieResponse;
+import com.example.android.popularmoviesV1.model.Movies;
+import com.example.android.popularmoviesV1.utils.ApiClient;
+import com.example.android.popularmoviesV1.utils.ApiInterface;
+import com.example.android.popularmoviesV1.utils.Constants;
+import com.example.android.popularmoviesV1.utils.MovieAdapter;
+import com.example.android.popularmoviesV1.utils.NetworkUtils;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.android.popularmovies;
+package com.example.android.popularmoviesV1;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.popularmovies.model.Movies;
-import com.example.android.popularmovies.utils.Constants;
+import com.example.android.popularmoviesV1.model.Movies;
+import com.example.android.popularmoviesV1.utils.Constants;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindDrawable;

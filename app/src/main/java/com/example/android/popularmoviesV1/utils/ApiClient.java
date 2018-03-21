@@ -1,4 +1,4 @@
-package com.example.android.popularmovies.utils;
+package com.example.android.popularmoviesV1.utils;
 
 import android.util.Log;
 
