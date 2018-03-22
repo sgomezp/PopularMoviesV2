@@ -1,7 +1,7 @@
 # Popular Movies Stage 1
 Project for Android Developer Nanodegree
 
-<p><b>To insert your API Key you must go to utils --> Constants.java file and insert it there </b></p>
+<p><b>You will need your own themoviedb.org API Key. </b></p>
 
 ## This App will
 
