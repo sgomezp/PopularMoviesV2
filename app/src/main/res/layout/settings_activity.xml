@@ -15,7 +15,7 @@
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/settingFragment"
-        android:name="com.example.android.popularmoviesV1.SettingActivity$MoviesPreferenceFragment"
+        android:name="com.example.android.popularmoviesV2.SettingActivity$MoviesPreferenceFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"

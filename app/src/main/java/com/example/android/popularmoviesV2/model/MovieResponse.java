@@ -1,12 +1,9 @@
-package com.example.android.popularmoviesV1.model;
+package com.example.android.popularmoviesV2.model;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-/**
- * Created by sgomezp on 05/03/2018.
- */
 
 public class MovieResponse {
 

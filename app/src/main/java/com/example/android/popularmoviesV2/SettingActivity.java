@@ -1,4 +1,4 @@
-package com.example.android.popularmoviesV1;
+package com.example.android.popularmoviesV2;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,9 +9,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-/**
- * Created by sgomezp on 08/03/2018.
- */
 
 public class SettingActivity extends AppCompatActivity {
 

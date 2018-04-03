@@ -1,10 +1,11 @@
-package com.example.android.popularmoviesV1;
+package com.example.android.popularmoviesV2;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,13 +18,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.android.popularmoviesV1.model.MovieResponse;
-import com.example.android.popularmoviesV1.model.Movies;
-import com.example.android.popularmoviesV1.utils.ApiClient;
-import com.example.android.popularmoviesV1.utils.ApiInterface;
-import com.example.android.popularmoviesV1.utils.Constants;
-import com.example.android.popularmoviesV1.utils.MovieAdapter;
-import com.example.android.popularmoviesV1.utils.NetworkUtils;
+import com.example.android.popularmoviesV2.model.MovieResponse;
+import com.example.android.popularmoviesV2.model.Movies;
+import com.example.android.popularmoviesV2.utils.ApiClient;
+import com.example.android.popularmoviesV2.utils.ApiInterface;
+import com.example.android.popularmoviesV2.utils.Constants;
+import com.example.android.popularmoviesV2.utils.MovieAdapter;
+import com.example.android.popularmoviesV2.utils.NetworkUtils;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by sgomezp on 23/02/2018.
+ * Created by sgomezp on 23/03/2018.
  * <p>
  * Based on Android Working with Retrofit HTTP Library
  * https://www.androidhive.info/2016/05/android-working-with-retrofit-http-library/
@@ -133,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             Log.d(TAG, "url: " + call.request().url().toString());
             call.enqueue(new Callback<MovieResponse>() {
                 @Override
-                public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                     int statusCode = response.code();
                     if (response.isSuccessful()) {
                         loadingIndicator.setVisibility(View.INVISIBLE);
@@ -152,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 }
 
                 @Override
-                public void onFailure(Call<MovieResponse> call, Throwable t) {
+                public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
                     // Log error here since request failed
                     showMessage(getString(R.string.no_internet_error));
 

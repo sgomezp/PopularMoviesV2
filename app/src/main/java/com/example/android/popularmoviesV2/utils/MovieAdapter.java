@@ -1,4 +1,4 @@
-package com.example.android.popularmoviesV1.utils;
+package com.example.android.popularmoviesV2.utils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,16 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.android.popularmoviesV1.DetailActivity;
-import com.example.android.popularmoviesV1.R;
-import com.example.android.popularmoviesV1.model.Movies;
+import com.example.android.popularmoviesV2.DetailActivity;
+import com.example.android.popularmoviesV2.R;
+import com.example.android.popularmoviesV2.model.Movies;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-/**
- * Created by sgomezp on 23/02/2018.
- */
 
 public  class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
 
@@ -96,7 +93,7 @@ public  class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>
          * Constructor for our ViewHolder.
          */
 
-        public ViewHolder(View itemView){
+        private ViewHolder(View itemView) {
             super(itemView);
             gridLayout = itemView;
 

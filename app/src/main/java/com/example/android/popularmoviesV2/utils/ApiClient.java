@@ -1,14 +1,8 @@
-package com.example.android.popularmoviesV1.utils;
-
-import android.util.Log;
+package com.example.android.popularmoviesV2.utils;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-
-/**
- * Created by sgomezp on 05/03/2018.
- */
 
 public class ApiClient {
 
@@ -23,7 +17,7 @@ public class ApiClient {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-        Log.d(TAG, "retrofit es: " + retrofit);
+
         return  retrofit;
 
     }

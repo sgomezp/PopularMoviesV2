@@ -1,12 +1,9 @@
-package com.example.android.popularmoviesV1.utils;
+package com.example.android.popularmoviesV2.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-/**
- * Created by sgomezp on 13/03/2018.
- */
 
 public class NetworkUtils {
 

@@ -1,13 +1,13 @@
-package com.example.android.popularmoviesV1.model;
+package com.example.android.popularmoviesV2.model;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by sgomezp on 26/02/2018.
- */
+
 
 public class Movies {
 
+    @SerializedName("id")
+    private int movieId;
     @SerializedName("poster_path")
     private String posterPath;
     @SerializedName("original_title")
@@ -25,7 +25,8 @@ public class Movies {
     private  int mTitle;
     private  int mSynopsis;*/
 
-    public Movies(String posterPath, String originalTitle, String overview, Double voteAverage, String releaseDate){
+    public Movies(int movieId, String posterPath, String originalTitle, String overview, Double voteAverage, String releaseDate) {
+        this.movieId = movieId;
         this.posterPath = posterPath;
         this.originalTitle = originalTitle;
         this.overview = overview;
@@ -74,6 +75,7 @@ public class Movies {
     }
 
 
-
-
+    public int getId() {
+        return movieId;
+    }
 }
