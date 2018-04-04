@@ -10,7 +10,7 @@ public class MovieReview {
 
     // Movie Review Id
     @SerializedName("id")
-    private int reviewId;
+    private String reviewId;
 
     // Movie Review Author
     @SerializedName("author")
@@ -38,11 +38,11 @@ public class MovieReview {
      * Getters and Setters methods
      */
 
-    public int getReviewId() {
+    public String getReviewId() {
         return reviewId;
     }
 
-    public void setReviewId(int reviewId) {
+    public void setReviewId(String reviewId) {
         this.reviewId = reviewId;
     }
 

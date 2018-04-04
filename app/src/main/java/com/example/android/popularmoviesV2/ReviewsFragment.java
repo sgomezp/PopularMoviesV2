@@ -141,7 +141,7 @@ public class ReviewsFragment extends Fragment implements SwipeRefreshLayout.OnRe
                         //loadingIndicator.setVisibility(View.INVISIBLE);
                         Log.d(TAG, "onResponse: was successful");
                         mMovieReviewList = response.body().getResults();
-                        Log.d(TAG, "onResponse: response body " + mMovieReviewResponse.toString());
+                        //Log.d(TAG, "onResponse: response body " + mMovieReviewResponse.toString());
 
                         if (mReviewAdapter == null) {
                             Log.d(TAG, "onResponse: mReviewAdapter es Null");
@@ -160,6 +160,7 @@ public class ReviewsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
                 @Override
                 public void onFailure(Call<MovieReviewResponse> call, Throwable t) {
+                    Log.d(TAG, "onFailure: I'm here");
                     // Log error here since request failed
                     //showMessage(getString(R.string.no_internet_error));
 

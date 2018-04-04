@@ -1,6 +1,7 @@
 package com.example.android.popularmoviesV2.utils;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -79,6 +80,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
 
     // Custom ViewHolder class
     public class ReviewViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.card_view_review)
+        CardView cardView;
 
         //@BindView(R.id.expand_view) //Box expandable
         //ExpandableTextView mExpandableView;
