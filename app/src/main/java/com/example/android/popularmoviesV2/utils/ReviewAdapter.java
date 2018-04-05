@@ -74,7 +74,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
             return 0;
         } else {
             Log.d(TAG, "getItemCount: mMovieReviewList " + mMovieReviewList.size());
-            return mMovieReviewList.size() + 1;
+            return (mMovieReviewList.size());
         }
     }
 
