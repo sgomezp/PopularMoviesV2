@@ -44,6 +44,7 @@ public class TrailersFragment extends Fragment implements SwipeRefreshLayout.OnR
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private TrailerAdapter mTrailerAdapter;
+    private TrailerAdapter.OnItemClickListener listener;
 
     @Nullable
     @Override
@@ -79,7 +80,7 @@ public class TrailersFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         LoadListTrailer();
 
-        mTrailerAdapter = new TrailerAdapter(mMovieTrailerList, R.layout.list_item_trailer, this.getActivity());
+        mTrailerAdapter = new TrailerAdapter(mMovieTrailerList, R.layout.list_item_trailer, this.getActivity(), listener);
         mRecyclerView.setAdapter(mTrailerAdapter);
 
         //Load List Reviews
@@ -120,7 +121,7 @@ public class TrailersFragment extends Fragment implements SwipeRefreshLayout.OnR
 
                         if (mTrailerAdapter == null) {
                             Log.d(TAG, "onResponse: mTrailerAdapter es Null");
-                            mRecyclerView.setAdapter(new TrailerAdapter(mMovieTrailerList, R.layout.list_item_trailer, getContext()));
+                            mRecyclerView.setAdapter(new TrailerAdapter(mMovieTrailerList, R.layout.list_item_trailer, getContext(), listener));
                             mRecyclerView.setHasFixedSize(false);
                         } else {
                             Log.d(TAG, "onResponse: mReviewAdapter no es null");
