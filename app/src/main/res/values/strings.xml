@@ -39,5 +39,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="expand_collapse_review">Expand/Collapse review</string>
+    <string name="label_read_more">Read more</string>
+    <string name="label_review_by">Review by %1$s</string>
+    <string name="content_description_trailer_image">Movie trailer Image</string>
 
 </resources>

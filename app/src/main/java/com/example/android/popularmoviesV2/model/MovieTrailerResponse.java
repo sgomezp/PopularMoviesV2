@@ -10,22 +10,15 @@ import java.util.List;
 
 public class MovieTrailerResponse {
 
-    // Movie Trailer list
-    @SerializedName("results")
-    private List<MovieTrailer> movieTrailerList;
-
     // Movie Trailer Id
     @SerializedName("id")
     private int movieId;
 
-
-    private MovieTrailerResponse(List<MovieTrailer> movieTrailerList, int movieId) {
-        this.movieId = movieId;
-        this.movieTrailerList = movieTrailerList;
-    }
+    // Movie Trailer list
+    @SerializedName("results")
+    private List<MovieTrailer> movieTrailerList = null;
 
     // Getters and Setters methods
-
 
     public int getMovieId() {
         return movieId;
@@ -41,6 +34,10 @@ public class MovieTrailerResponse {
 
     public void setMovieTrailerList(List<MovieTrailer> movieTrailerList) {
         this.movieTrailerList = movieTrailerList;
+    }
+
+    public List<MovieTrailer> getResults() {
+        return movieTrailerList;
     }
 }
 

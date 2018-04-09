@@ -1,7 +1,6 @@
 package com.example.android.popularmoviesV2.utils;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.android.popularmoviesV2.R;
 import com.example.android.popularmoviesV2.model.MovieReview;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import java.util.List;
 
@@ -52,9 +52,11 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
 
         final MovieReview movieReview = mMovieReviewList.get(position);
         Log.d(TAG, "onBindViewHolder: position: " + mMovieReviewList.get(position));
-        holder.mTextViewReviewAuthor.setText(movieReview.getReviewAuthor());
+        //holder.mTextViewReviewAuthor.setText(movieReview.getReviewAuthor());
+        holder.mTextViewReviewAuthor.setText(mContext.
+                getString(R.string.label_review_by, movieReview.getReviewAuthor().trim()));
 
-        holder.mTextViewReview.setText(movieReview.getReviewContent());
+        holder.mExpandableView.setText(movieReview.getReviewContent());
 
     }
 
@@ -81,14 +83,14 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
     // Custom ViewHolder class
     public class ReviewViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.card_view_review)
-        CardView cardView;
+        @BindView(R.id.expand_view)
+        ExpandableTextView mExpandableView;
 
         //@BindView(R.id.expand_view) //Box expandable
         //ExpandableTextView mExpandableView;
         @BindView(R.id.tv_author_review)  //Author of the review
                 TextView mTextViewReviewAuthor;
-        @BindView(R.id.content_review) //Review
+        @BindView(R.id.expandable_text) //Review
                 TextView mTextViewReview;
 
         private ReviewViewHolder(View itemView) {

@@ -1,92 +1,116 @@
 package com.example.android.popularmoviesV2.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.util.Log;
 
+import com.example.android.popularmoviesV2.utils.Constants;
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by sgomezp on 27/03/2018.
  */
 
-public class MovieTrailer implements Parcelable {
+public class MovieTrailer {
 
-    public static final Creator<MovieTrailer> CREATOR = new Creator<MovieTrailer>() {
-        @Override
-        public MovieTrailer createFromParcel(Parcel source) {
-            return new MovieTrailer(source);
-        }
+    private static final String TAG = MovieTrailer.class.getSimpleName();
 
-        @Override
-        public MovieTrailer[] newArray(int size) {
-            return new MovieTrailer[size];
-        }
-    };
     // Movie Trailer Id
     @SerializedName("id")
     private String trailerId;
-    // Movie Trailer name
+
+    @SerializedName("iso_639_1")
+    private String trailerIso6391;
+
+    @SerializedName("iso_3166_1")
+    private String trailerIso31661;
+
+    @SerializedName("key")
+    private String trailerKey;
+
     @SerializedName("name")
     private String trailerName;
-    // Movie Trailer site
+
     @SerializedName("site")
-    private String siteTrailer;
-    // Movie Trailer type
+    private String trailerSite;
+
+    @SerializedName("size")
+    private Integer trailerSize;
+
     @SerializedName("type")
     private String trailerType;
 
-    // Empty constructor
-    public MovieTrailer() {
 
-    }
+    // Getters and Setters
 
-    protected MovieTrailer(Parcel in) {
-        this.trailerId = in.readString();
-        this.trailerName = in.readString();
-        this.siteTrailer = in.readString();
-        this.trailerType = in.readString();
-    }
-
-    /**
-     * Getters and Setters methods
-     */
-
-    public String getTrailerId() {
+    public String getIdTrailer() {
         return trailerId;
     }
 
-    public void setTrailerId(String trailerId) {
-        this.trailerId = trailerId;
+    public void setIdTrailer(String id) {
+        this.trailerId = id;
     }
 
-    public String getTrailerName() {
+    public String getIso6391Trailer() {
+        return trailerIso6391;
+    }
+
+    public void setIso6391Trailer(String iso6391) {
+        this.trailerIso6391 = iso6391;
+    }
+
+    public String getIso31661Trailer() {
+        return trailerIso31661;
+    }
+
+    public void setIso31661Trailer(String iso31661) {
+        this.trailerIso6391 = iso31661;
+    }
+
+    public String getKeyTrailer() {
+        return trailerKey;
+    }
+
+    public void setKeyTrailer(String key) {
+        this.trailerKey = key;
+    }
+
+    public String getNameTrailer() {
         return trailerName;
     }
 
-    public void setTrailerName(String trailerName) {
-        this.trailerName = trailerName;
+    public void setNameTrailer(String name) {
+        this.trailerName = name;
     }
 
     public String getSiteTrailer() {
-        return siteTrailer;
+        return trailerSite;
     }
 
-    public void setTrailerType(String trailerType) {
-        this.trailerType = trailerType;
+    public void setSiteTrailer(String site) {
+        this.trailerSite = site;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public Integer getSizeTrailer() {
+        return trailerSize;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.trailerId);
-        dest.writeString(this.trailerName);
-        dest.writeString(this.siteTrailer);
-        dest.writeString(this.trailerType);
+    public void setSizeTrailer(Integer size) {
+        this.trailerSize = size;
     }
+
+    public String getTypeTrailer() {
+        return trailerType;
+    }
+
+    public void setTypeTrailer(String type) {
+        this.trailerType = type;
+    }
+
+    public String getVideoImageThumb(MovieTrailer movieTrailer) {
+        Log.d(TAG, "Url image: " + String.format(Constants.BASE_URL_THUMB_TRAILER, movieTrailer.getKeyTrailer()));
+        return String.format(Constants.BASE_URL_THUMB_TRAILER, movieTrailer.getKeyTrailer());
+    }
+
+
 }
 
 

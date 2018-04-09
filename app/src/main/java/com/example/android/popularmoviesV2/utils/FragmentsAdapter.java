@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.example.android.popularmoviesV2.DetailsFragment;
 import com.example.android.popularmoviesV2.ReviewsFragment;
+import com.example.android.popularmoviesV2.TrailersFragment;
 
 /**
  * Created by sgomezp on 30/03/2018.
@@ -46,9 +47,10 @@ public class FragmentsAdapter extends FragmentPagerAdapter {
                 Log.d(TAG, "getItem: Estoy en ReviewsFragment");
                 fragment = new ReviewsFragment();
                 break;
+            case 2:
+                fragment = new TrailersFragment();
+                break;
             default:
-                Log.d(TAG, "getItem: Estoy en ReviewsFragment");
-                Log.d(TAG, "getItem: Estoy en Default DetailsFragment");
                 fragment = new DetailsFragment();
                 break;
         }
@@ -70,7 +72,7 @@ public class FragmentsAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -80,9 +82,18 @@ public class FragmentsAdapter extends FragmentPagerAdapter {
             return "Details";
 
         } else {
-            return "Reviews";
+            if (position == 1) {
+                return "Reviews";
+
+            } else {
+                return "Trailers";
+            }
+
         }
 
-
     }
+
+
+
+
 }
