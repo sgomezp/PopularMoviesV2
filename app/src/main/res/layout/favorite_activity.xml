@@ -11,7 +11,7 @@
 
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/list_trailer"
+            android:id="@+id/list_favorite"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="@dimen/margin_10">
@@ -23,27 +23,9 @@
         <!--Views when list has not items-->
 
         <TextView
-            android:id="@+id/show_no_items_error"
+            android:id="@+id/empty_favorite_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
-
-        <!--<TextView android:id="@+id/tv_empty_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text = "There are not items to show"/>
-
-        &lt;!&ndash; Loading indicator shown before first load &ndash;&gt;
-        <ProgressBar
-            android:id="@+id/loading_indicator"
-            style="@style/Widget.AppCompat.ProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>-->
 
 
     </android.support.constraint.ConstraintLayout>

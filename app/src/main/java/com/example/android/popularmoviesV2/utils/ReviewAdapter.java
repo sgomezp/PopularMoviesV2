@@ -29,6 +29,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
     private int mLayout;
     private Context mContext;
 
+
     public ReviewAdapter(List<MovieReview> movieReviewList, int layout, Context context) {
         mMovieReviewList = movieReviewList;
         mLayout = layout;
@@ -86,12 +87,12 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
         @BindView(R.id.expand_view)
         ExpandableTextView mExpandableView;
 
-        //@BindView(R.id.expand_view) //Box expandable
-        //ExpandableTextView mExpandableView;
         @BindView(R.id.tv_author_review)  //Author of the review
                 TextView mTextViewReviewAuthor;
         @BindView(R.id.expandable_text) //Review
                 TextView mTextViewReview;
+        @BindView(R.id.empty_view)
+        TextView emptyView;
 
         private ReviewViewHolder(View itemView) {
             super(itemView);

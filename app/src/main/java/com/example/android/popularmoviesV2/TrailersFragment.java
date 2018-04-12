@@ -44,7 +44,7 @@ public class TrailersFragment extends Fragment implements SwipeRefreshLayout.OnR
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private TrailerAdapter mTrailerAdapter;
-    private TrailerAdapter.OnItemClickListener listener;
+    //private TrailerAdapter.OnItemClickListener listener = null;
 
     @Nullable
     @Override
@@ -78,12 +78,12 @@ public class TrailersFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         //Bind RecyclerView with the adapter
 
-        LoadListTrailer();
 
-        mTrailerAdapter = new TrailerAdapter(mMovieTrailerList, R.layout.list_item_trailer, this.getActivity(), listener);
+        mTrailerAdapter = new TrailerAdapter(mMovieTrailerList, R.layout.list_item_trailer, this.getActivity());
         mRecyclerView.setAdapter(mTrailerAdapter);
 
         //Load List Reviews
+        LoadListTrailer();
 
         return mViewFragment;
 
@@ -117,11 +117,16 @@ public class TrailersFragment extends Fragment implements SwipeRefreshLayout.OnR
                         //loadingIndicator.setVisibility(View.INVISIBLE);
                         Log.d(TAG, "onResponse: was successful");
                         mMovieTrailerList = response.body().getResults();
-                        //Log.d(TAG, "onResponse: response body " + mMovieReviewResponse.toString());
+
+                        // Display message for no trailers
+                        if (mMovieTrailerList.isEmpty()) {
+                            Toast.makeText(getContext(), "No existen Trailers", Toast.LENGTH_LONG).show();
+                        }
+
 
                         if (mTrailerAdapter == null) {
                             Log.d(TAG, "onResponse: mTrailerAdapter es Null");
-                            mRecyclerView.setAdapter(new TrailerAdapter(mMovieTrailerList, R.layout.list_item_trailer, getContext(), listener));
+                            mRecyclerView.setAdapter(new TrailerAdapter(mMovieTrailerList, R.layout.list_item_trailer, getContext()));
                             mRecyclerView.setHasFixedSize(false);
                         } else {
                             Log.d(TAG, "onResponse: mReviewAdapter no es null");

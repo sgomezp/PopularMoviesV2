@@ -9,6 +9,17 @@
     android:paddingBottom="@dimen/margin_10">
 
 
+    <!--Views when list has not items-->
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:visibility="gone"
+        tools:text="There are not items to show" />
+
+
     <TextView
         android:id="@+id/tv_author_review"
         android:layout_width="match_parent"

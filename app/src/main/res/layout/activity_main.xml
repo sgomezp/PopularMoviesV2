@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/review_scroll_movies"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
 
     <include
         android:id="@+id/appbar"
@@ -35,3 +40,4 @@
         android:layout_gravity="center" />
 
 </FrameLayout>
+

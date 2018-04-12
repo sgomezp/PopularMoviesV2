@@ -27,21 +27,25 @@ import butterknife.ButterKnife;
 
 public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerViewHolder> {
 
+
     private static final String TAG = TrailerAdapter.class.getSimpleName();
-    private final OnItemClickListener mListener;
+
+
     private List<MovieTrailer> mMovieTrailerList;
     private int mLayout;
     private Context mContext;
 
-    public TrailerAdapter(List<MovieTrailer> movieTrailerList, int layout, Context context,
-                          OnItemClickListener listener) {
+
+    //private  MovieTrailer movieTrailer = null;
+
+    public TrailerAdapter(List<MovieTrailer> movieTrailerList, int layout, Context context) {
         mMovieTrailerList = movieTrailerList;
         mLayout = layout;
         mContext = context;
-        mListener = listener;
+
     }
 
-    public static void watchYoutubeVideo(Context context, String key, int position) {
+    public static void watchYoutubeVideo(Context context, String key, final int position) {
         Uri trailerUrlApp = Uri.parse(Constants.BASE_URL_VIDEO_TRAILER_APP + key);
         Uri trailerUrlWeb = Uri.parse(Constants.BASE_URL_VIDEO_TRAILER_YT + key);
         Intent appIntent = new Intent(Intent.ACTION_VIEW, trailerUrlApp);
@@ -69,10 +73,10 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
     //Create new views (invoked by the layout manager
     @Override
     public void onBindViewHolder(TrailerViewHolder holder, int position) {
-        //final MovieTrailer movieTrailer = mMovieTrailerList.get(position);
-        holder.bind(mMovieTrailerList.get(position), mListener);
+        final MovieTrailer movieTrailer = mMovieTrailerList.get(position);
 
-       /*Picasso.with(mContext)
+
+        Picasso.with(mContext)
                 .load(movieTrailer.getVideoImageThumb(movieTrailer))
                 .placeholder(R.drawable.default_placeholder)
                 .error(R.drawable.default_placeholder)
@@ -80,7 +84,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
 
 
         holder.mTrailerName.setText(movieTrailer.getNameTrailer());
-*/
+
     }
 
     @Override
@@ -100,10 +104,14 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
     }
 
     public interface OnItemClickListener {
+        /**
+         * @param movieTrailer
+         */
+
         void onItemClick(MovieTrailer movieTrailer);
     }
 
-    public class TrailerViewHolder extends RecyclerView.ViewHolder {
+    public class TrailerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.trailer_image)
         ImageView mTrailerImage;
@@ -114,37 +122,21 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
         public TrailerViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            mTrailerName.setOnClickListener(this);
 
         }
 
-        /*@Override
+        @Override
         public void onClick(View view) {
             int position = getAdapterPosition(); // gets item position
             if (position != RecyclerView.NO_POSITION) { // Check if an item was deleted, but user clicked it before the UI removed it
                 MovieTrailer trailer = mMovieTrailerList.get(position);
-                mListener.onItemClick(trailer);
                 watchYoutubeVideo(mContext, trailer.getKeyTrailer(), position);
             }
-        }*/
-
-
-        public void bind(final MovieTrailer movieTrailer, final OnItemClickListener listener) {
-            Picasso.with(mContext)
-                    .load(movieTrailer.getVideoImageThumb(movieTrailer))
-                    .placeholder(R.drawable.default_placeholder)
-                    .error(R.drawable.default_placeholder)
-                    .into(mTrailerImage);
-
-            mTrailerName.setText(movieTrailer.getNameTrailer());
-
-            //Handles the row being clicked
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onItemClick(movieTrailer);
-                }
-            });
         }
+
+
+
     }
 
 

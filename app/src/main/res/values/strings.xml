@@ -42,5 +42,6 @@
     <string name="label_read_more">Read more</string>
     <string name="label_review_by">Review by %1$s</string>
     <string name="content_description_trailer_image">Movie trailer Image</string>
+    <string name="content_description_favorite_image">Favorite Image thumbnail</string>
 
 </resources>

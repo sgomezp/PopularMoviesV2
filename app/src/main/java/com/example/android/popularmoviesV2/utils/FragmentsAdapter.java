@@ -17,6 +17,8 @@ import com.example.android.popularmoviesV2.TrailersFragment;
 public class FragmentsAdapter extends FragmentPagerAdapter {
 
     public static final String TAG = FragmentsAdapter.class.getSimpleName();
+    final int PAGE_COUNT = 3;
+    private String tabTitles[] = new String[]{"Details", "Reviews", "Trailers"};
 
     /**
      * Context of the app
@@ -24,7 +26,7 @@ public class FragmentsAdapter extends FragmentPagerAdapter {
     private Context mContext;
 
 
-    public FragmentsAdapter(Context context, FragmentManager fragmentManager) {
+    public FragmentsAdapter(FragmentManager fragmentManager, Context context) {
         super(fragmentManager);
         mContext = context;
     }
@@ -35,9 +37,11 @@ public class FragmentsAdapter extends FragmentPagerAdapter {
      */
 
 
+
     @Override
     public Fragment getItem(int position) {
         Fragment fragment;
+        Log.d(TAG, "getItem: Position: " + position);
         switch (position) {
             case 0:
                 Log.d(TAG, "getItem: Estoy en DetailsFragment");
@@ -56,13 +60,6 @@ public class FragmentsAdapter extends FragmentPagerAdapter {
         }
 
         return fragment;
-        /*Log.d(TAG, "getItem: position =  " + position);
-        if (position == 0){
-            return  new DetailsFragment();
-        }else {
-            return new ReviewsFragment();
-        }*/
-
 
     }
 
@@ -72,13 +69,16 @@ public class FragmentsAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return PAGE_COUNT;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
         // Generate title based on item position
-        if (position == 0) {
+        return tabTitles[position];
+
+
+        /*if (position == 0) {
             return "Details";
 
         } else {
@@ -89,11 +89,8 @@ public class FragmentsAdapter extends FragmentPagerAdapter {
                 return "Trailers";
             }
 
-        }
+        }*/
 
     }
-
-
-
 
 }

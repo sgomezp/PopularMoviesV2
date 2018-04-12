@@ -1,5 +1,7 @@
 package com.example.android.popularmoviesV2;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -9,7 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.example.android.popularmoviesV2.data.MovieContract;
 import com.example.android.popularmoviesV2.model.Movies;
 import com.example.android.popularmoviesV2.utils.FragmentsAdapter;
 
@@ -19,6 +23,7 @@ public class DetailActivity extends AppCompatActivity{
     public static final String TAG = DetailActivity.class.getSimpleName();
 
     public static Movies currentMovie;
+    private SQLiteDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -29,11 +34,12 @@ public class DetailActivity extends AppCompatActivity{
                 .replace(R.id.container, new DetailsFragment())
                 .commit();*/
 
+
         // Find the view pager that will allow the user to swipe between fragments
         ViewPager viewPager = findViewById(R.id.viewpager);
 
         // Create an adapter that knows which fragment should be shown on each page
-        FragmentsAdapter adapter = new FragmentsAdapter(this, getSupportFragmentManager());
+        FragmentsAdapter adapter = new FragmentsAdapter(getSupportFragmentManager(), DetailActivity.this);
 
 
         // Set the adapter onto the view pager
@@ -54,23 +60,30 @@ public class DetailActivity extends AppCompatActivity{
         Toolbar myToolbar = findViewById(R.id.toolbar);
 
         if (myToolbar != null) {
-            Log.d(TAG, "Detail Activity myToolBar no es Null");
+
             setSupportActionBar(myToolbar);
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
                 actionBar.show();
-                Log.d(TAG, "Detail Activity action bar  no es Null");
+
             }
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setTitle(R.string.title_bar_details_activity);
-            Log.d(TAG, "title bar details: " + R.string.title_bar_details_activity);
+
 
         } else {
             Log.d(TAG, "Detail Activity myToolBar es Null");
         }
 
+    }
+
+    public long addFavoriteMovie() {
+        ContentValues cv = new ContentValues();
+        cv.put(MovieContract.MovieEntry.COLUMN_MOVIE_TITLE, currentMovie.getOriginalTitle());
+        cv.put(MovieContract.MovieEntry.COLUMN_THUMBNAIL, currentMovie.getPosterPath());
+        return mDb.insert(MovieContract.MovieEntry.TABLE_NAME, null, cv);
     }
 
 
@@ -91,6 +104,18 @@ public class DetailActivity extends AppCompatActivity{
         switch (id) {
             case R.id.menu_favorites:
                 Log.d(TAG, "Estoy en Favoritos de DetailsActivity");
+                Toast.makeText(this, "Favorite clicked!", Toast.LENGTH_LONG).show();
+                /*Log.d(TAG, "onOptionsItemSelected: Title: " +
+                        DetailsFragment.currentMovie.getOriginalTitle());
+                Log.d(TAG, "onOptionsItemSelected: Url : " +
+                        DetailsFragment.currentMovie.getPosterPath());*/
+                if (addFavoriteMovie() == -1) {
+                    Toast.makeText(this, "Failed to add", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, "Movie added", Toast.LENGTH_LONG).show();
+                }
+
+
 
                 return true;
             /*case R.id.action_settings:
