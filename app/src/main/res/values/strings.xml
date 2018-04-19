@@ -51,5 +51,8 @@
     <string name="no_reviews_found">No reviews found for this movie</string>
     <string name="no_trailers_found">No Trailers found for this movie</string>
     <string name="network_no_available">Network  no Available</string>
+    <string name="share_menu_item">Share</string>
+    <string name="send_to">Share with</string>
+    <string name="no_release_date">Release date no exist</string>
 
 </resources>

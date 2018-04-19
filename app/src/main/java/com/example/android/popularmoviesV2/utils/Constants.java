@@ -13,8 +13,8 @@ public class Constants {
     static final String BASE_URL = "http://api.themoviedb.org/3/";
     static final String URL_REVIEWS = "movie/{id}/reviews";
     static final String URL_VIDEOS = "movie/{id}/videos";
-    static final String BASE_URL_VIDEO_TRAILER_APP = "vnd.youtube://";
-    static final String BASE_URL_VIDEO_TRAILER_YT = "https://www.youtube.com/watch?v=";
+    public static final String BASE_URL_VIDEO_TRAILER_APP = "vnd.youtube://";
+    public static final String BASE_URL_VIDEO_TRAILER_YT = "https://www.youtube.com/watch?v=";
 
 
 }

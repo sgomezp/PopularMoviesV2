@@ -35,6 +35,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private static final int LOADER_ID = 0;
 
 
+
     public static Movies currentMovie;
     @BindView(R.id.sliding_tabs)
     TabLayout tabLayout;
@@ -82,7 +83,9 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         if (extras != null) {
             int position = extras.getInt("position");
             currentMovie = MainActivity.movies.get(position);
+
         }
+
 
         // Find the view pager that will allow the user to swipe between fragments
         ViewPager viewPager = findViewById(R.id.viewpager);
@@ -250,6 +253,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -263,6 +267,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 } else {
                     addToFavorites();
                 }
+
                 return true;
 
         }
@@ -270,6 +275,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         return super.onOptionsItemSelected(item);
 
     }
+
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {

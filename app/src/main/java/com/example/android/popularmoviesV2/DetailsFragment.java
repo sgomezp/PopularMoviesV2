@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.android.popularmoviesV2.model.Movies;
 import com.example.android.popularmoviesV2.utils.Constants;
+import com.example.android.popularmoviesV2.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindDrawable;
@@ -90,7 +91,7 @@ public class DetailsFragment extends Fragment implements SwipeRefreshLayout.OnRe
             movieTitle.setText(mMovies.getOriginalTitle());
 
             userRating.setText(String.valueOf(mMovies.getVoteAverage()));
-            releaseDate.setText(mMovies.getReleaseDate());
+            releaseDate.setText(Utils.FormatDate(getActivity(), mMovies.getReleaseDate()));
             synopsis.setText(mMovies.getOverview());
 
             Picasso.with(getActivity())
