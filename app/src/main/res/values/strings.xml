@@ -43,5 +43,13 @@
     <string name="label_review_by">Review by %1$s</string>
     <string name="content_description_trailer_image">Movie trailer Image</string>
     <string name="content_description_favorite_image">Favorite Image thumbnail</string>
+    <string name="list_favorites">View Favorites</string>
+    <string name="title_bar_favorites_activity">My Favorites Movies</string>
+    <string name="add_favorites">Add Favorites</string>
+    <string name="empty_favorite_movies">You don\'t have Favorite Movies yet \n\n
+    You can start adding them from the Details screen</string>
+    <string name="no_reviews_found">No reviews found for this movie</string>
+    <string name="no_trailers_found">No Trailers found for this movie</string>
+    <string name="network_no_available">Network  no Available</string>
 
 </resources>

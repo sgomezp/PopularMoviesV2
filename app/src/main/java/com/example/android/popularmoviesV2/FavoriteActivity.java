@@ -2,24 +2,36 @@ package com.example.android.popularmoviesV2;
 
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.android.popularmoviesV2.data.MovieContract;
-import com.example.android.popularmoviesV2.data.MovieDbHelper;
 import com.example.android.popularmoviesV2.utils.FavoritesAdapter;
 
-public class FavoriteActivity extends AppCompatActivity {
+public class FavoriteActivity extends AppCompatActivity implements
+        LoaderManager.LoaderCallbacks<Cursor> {
 
+    // Constants for logging and referring to a unique loader
     private static final String TAG = FavoriteActivity.class.getSimpleName();
-
+    private static final int FAVORITE_LOADER_ID = 0;
+    RecyclerView favoriteRecyclerView;
+    // Member variables for the adapter and RecyclerView
     private FavoritesAdapter mAdapter;
-    private SQLiteDatabase mDb;
+    private TextView mTextViewEmptyList;
+
+    //private SQLiteDatabase mDb;
 
 
     @Override
@@ -27,28 +39,38 @@ public class FavoriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.favorite_activity);
 
-        // Set local attributes to corresponding views
-        RecyclerView favoriteRecyclerView;
+        //Handle Toolbar
+        Toolbar myToolbar = findViewById(R.id.toolbar);
+
+        if (myToolbar != null) {
+            setSupportActionBar(myToolbar);
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.show();
+
+            }
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle(R.string.title_bar_favorites_activity);
+
+
+        }
+
+        // Set the RecyclerView to its corresponding view
         favoriteRecyclerView = findViewById(R.id.list_favorite);
 
         // Set layout for the RecyclerView, because it's a list we are using the linear layout
         favoriteRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Create a DB helper (this will create the DB if run for the first time)
-        MovieDbHelper dbHelper = new MovieDbHelper(this);
-
-        // Keep a reference to the mDb until paused or killed. Get a writable database
-        // because you will be adding favorites movies
-        mDb = dbHelper.getWritableDatabase();
-
         // Get all movies info from the database and save in a cursor
-        Cursor cursor = getAllMovies();
+        //Cursor cursor = getAllMovies();
 
-        // Create an adapter for that cursor to display the data
-        mAdapter = new FavoritesAdapter(this, cursor);
-
-        // Link the adapter to the RecyclerView
+        // Initialize the adapter and attach it to the RecyclerView
+        mAdapter = new FavoritesAdapter(this);
         favoriteRecyclerView.setAdapter(mAdapter);
+
+        mTextViewEmptyList = findViewById(R.id.empty_favorite_list);
 
 
         // Create a new ItemTouchHelper with a SimpleCallback that handles both LEFT and RIGHT swipe directions
@@ -64,45 +86,139 @@ public class FavoriteActivity extends AppCompatActivity {
                 return false;
             }
 
+            // Called when a user swipes left or right on a ViewHolder
+
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                long id = (long) viewHolder.itemView.getTag();
+                int id = (int) viewHolder.itemView.getTag();
 
-                //call removeGuest and pass through that id
-                removeMovies(id);
-                //call swapCursor on mAdapter passing in getAllMovies() as the argument
-                //update the list
-                mAdapter.swapCursor(getAllMovies());
+                // Build appropriate uri with String row id appended
+                String stringId = Integer.toString(id);
+                Uri uri = MovieContract.MovieEntry.CONTENT_URI;
+                uri = uri.buildUpon().appendPath(stringId).build();
+
+                //Delete a single row of data using a ContentResolver
+                getContentResolver().delete(uri, null, null);
+
+                // Restart the loader to re-query for all tasks after a deletion
+                getSupportLoaderManager().restartLoader(FAVORITE_LOADER_ID,
+                        null, FavoriteActivity.this);
 
             }
-            //attach the ItemTouchHelper to the waitlistRecyclerView
+
 
         }).attachToRecyclerView(favoriteRecyclerView);
 
+        /*
+         Ensure a loader is initialized and active. If the loader doesn't already exist, one is
+         created, otherwise the last created loader is re-used.
+         */
+        getSupportLoaderManager().initLoader(FAVORITE_LOADER_ID, null, this);
 
     }
 
-    // This method is called when user clicks on the Add to waitlist button
-    public void addToFavorites(View view) {
 
+    /**
+     * This method is called after this activity has been paused or restarted.
+     * Often, this is after new data has been inserted through an AddTaskActivity,
+     * so this restarts the loader to re-query the underlying data for any changes.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // re-queries for all tasks
+        getSupportLoaderManager().restartLoader(FAVORITE_LOADER_ID, null, this);
     }
 
 
-    private Cursor getAllMovies() {
-        return mDb.query(
-                MovieContract.MovieEntry.TABLE_NAME,
-                null,
-                null,
-                null,
-                null,
-                null,
-                MovieContract.MovieEntry.COLUMN_MOVIE_TITLE
-        );
+    /**
+     * Instantiate and return a new Loader for the given ID.
+     *
+     * @param id         The ID whose loader is to be created.
+     * @param loaderArgs Any arguments supplied by the caller.
+     * @return Return a new Loader instance that is ready to start loading.
+     */
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle loaderArgs) {
+
+        return new AsyncTaskLoader<Cursor>(this) {
+
+            // Initialize a Cursor, this will hold all the favorite data
+            Cursor mFavoriteData = null;
+
+            // onStartLoading() is called when a loader first starts loading data
+            @Override
+            protected void onStartLoading() {
+                if (mFavoriteData != null) {
+                    // Delivers any previously loaded data immediately
+                    deliverResult(mFavoriteData);
+                } else {
+                    // Force a new load
+                    forceLoad();
+                }
+            }
+
+            // loadInBackground() performs asynchronous loading of data
+            @Override
+            public Cursor loadInBackground() {
+                // Will implement to load data
+
+                // Query and load all favorite data in the background;
+                try {
+                    return getContentResolver().query(MovieContract.MovieEntry.CONTENT_URI,
+                            null,
+                            null,
+                            null,
+                            null);
+
+                } catch (Exception e) {
+                    Log.e(TAG, "Failed to asynchronously load data.");
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+
+            // deliverResult sends the result of the load, a Cursor, to the registered listener
+            public void deliverResult(Cursor data) {
+                mFavoriteData = data;
+                super.deliverResult(data);
+            }
+
+        };
     }
 
-    private boolean removeMovies(long id) {
-        //call mDb.delete to pass in the TABLE_NAME and the condition that MovieEntry._ID equals id
-        return mDb.delete(MovieContract.MovieEntry.TABLE_NAME,
-                MovieContract.MovieEntry._ID + "=" + id, null) > 0;
+    /**
+     * Called when a previously created loader has finished its load.
+     *
+     * @param loader The Loader that has finished.
+     * @param data   The data generated by the Loader.
+     */
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        // Update the data that the adapter uses to create ViewHolders
+        mAdapter.swapCursor(data);
+        if (mAdapter.getItemCount() == 0) {
+            mTextViewEmptyList.setText(getString(R.string.empty_favorite_movies));
+            mTextViewEmptyList.setVisibility(View.VISIBLE);
+        } else {
+            mTextViewEmptyList.setText("");
+            mTextViewEmptyList.setVisibility(View.GONE);
+        }
+
+
+    }
+
+    /**
+     * Called when a previously created loader is being reset, and thus
+     * making its data unavailable.  The application should at this point
+     * remove any references it has to the Loader's data.
+     *
+     * @param loader The Loader that is being reset.
+     */
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mAdapter.swapCursor(null);
+
     }
 }

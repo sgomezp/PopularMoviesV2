@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.popularmoviesV2.model.MovieTrailer;
@@ -44,7 +45,8 @@ public class TrailersFragment extends Fragment implements SwipeRefreshLayout.OnR
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private TrailerAdapter mTrailerAdapter;
-    //private TrailerAdapter.OnItemClickListener listener = null;
+    TextView mEmptyView;
+    String mMessage;
 
     @Nullable
     @Override
@@ -53,6 +55,7 @@ public class TrailersFragment extends Fragment implements SwipeRefreshLayout.OnR
 
 
         mViewFragment = inflater.inflate(R.layout.trailer_fragment, container, false);
+        mEmptyView = mViewFragment.findViewById(R.id.empty_view_trailers);
         Bundle extras = getActivity().getIntent().getExtras();
 
         Intent intent = getActivity().getIntent();
@@ -94,7 +97,8 @@ public class TrailersFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         if (API_KEY.isEmpty()) {
             Log.d(TAG, "LoadListReview: Please obatin your API Key");
-            //showMessage(getString(R.string.api_missing_error));
+            mMessage = getString(R.string.api_missing_error);
+            handleEmptyList(true);
             return;
         }
         try {
@@ -120,7 +124,13 @@ public class TrailersFragment extends Fragment implements SwipeRefreshLayout.OnR
 
                         // Display message for no trailers
                         if (mMovieTrailerList.isEmpty()) {
-                            Toast.makeText(getContext(), "No existen Trailers", Toast.LENGTH_LONG).show();
+                            mMessage = getString(R.string.no_trailers_found);
+                            handleEmptyList(true);
+
+                        } else {
+                            mMessage = "";
+                            handleEmptyList(false);
+
                         }
 
 
@@ -135,22 +145,26 @@ public class TrailersFragment extends Fragment implements SwipeRefreshLayout.OnR
                         }
                     } else {
                         Log.d(TAG, "onResponse: No network Available ");
-                        //showMessage(getString(R.string.no_internet_error));
+                        mMessage = getString(R.string.network_no_available);
+                        handleEmptyList(true);
+
                     }
                 }
 
                 @Override
                 public void onFailure(Call<MovieTrailerResponse> call, Throwable t) {
                     Log.d(TAG, "onFailure: I'm here");
-                    // Log error here since request failed
-                    //showMessage(getString(R.string.no_internet_error));
+                    mMessage = getString(R.string.network_no_available);
+                    handleEmptyList(true);
+
 
                 }
             });
         } catch (Exception e) {
             Log.d(TAG, "LoadListReview: estoy en el Catch");
-            //showErrorMessage.setVisibility(View.VISIBLE);
-            //showMessage(getString(R.string.no_internet_error));
+            mMessage = getString(R.string.no_internet_error);
+            handleEmptyList(true);
+
         }
 
     }
@@ -179,5 +193,15 @@ public class TrailersFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public void onRefresh() {
 
+    }
+
+    public void handleEmptyList(boolean isEmpty) {
+        if (isEmpty) {
+            mEmptyView.setText(mMessage);
+            mEmptyView.setVisibility(View.VISIBLE);
+        } else {
+            mEmptyView.setText("");
+            mEmptyView.setVisibility(View.GONE);
+        }
     }
 }

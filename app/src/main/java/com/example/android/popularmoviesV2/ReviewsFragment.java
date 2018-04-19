@@ -40,7 +40,7 @@ public class ReviewsFragment extends Fragment {
 
     public static final String TAG = ReviewsFragment.class.getSimpleName();
     public static List<MovieReview> mMovieReviewList;
-    public TextView showErrorMessage;
+
     DetailActivity parentActivity;
     private View mViewFragment;
     private Movies mMovies;
@@ -48,19 +48,11 @@ public class ReviewsFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private ReviewAdapter mReviewAdapter;
     private ProgressBar mLoadingIndicator;
-    private TextView mEmptyView;
+    TextView mEmptyView;
+    String mMessage;
 
-    //private final Movies mMovies = DetailsFragment.currentMovie;
+
     private MovieReviewResponse mMovieReviewResponse;
-
-
-
-   /* @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        parentActivity = (DetailActivity) getActivity();
-    }
-*/
 
     public ReviewsFragment() {
         // Required empty public constructor
@@ -74,7 +66,7 @@ public class ReviewsFragment extends Fragment {
 
         mViewFragment = inflater.inflate(R.layout.reviews_fragment, container, false);
         mLoadingIndicator = mViewFragment.findViewById(R.id.loading_indicator);
-        mEmptyView = mViewFragment.findViewById(R.id.empty_view);
+        mEmptyView = mViewFragment.findViewById(R.id.empty_view_reviews);
         Bundle extras = getActivity().getIntent().getExtras();
 
         Intent intent = getActivity().getIntent();
@@ -117,10 +109,11 @@ public class ReviewsFragment extends Fragment {
 
     private void LoadListReview() {
 
-
         if (API_KEY.isEmpty()) {
             Log.d(TAG, "LoadListReview: Please obtain your API Key");
             //showMessage(getString(R.string.api_missing_error));
+            mMessage = getString(R.string.api_missing_error);
+            handleEmptyList(true);
             return;
         }
         try {
@@ -128,7 +121,7 @@ public class ReviewsFragment extends Fragment {
 
             mLoadingIndicator.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.VISIBLE);
-            //showErrorMessage.setVisibility(View.INVISIBLE);
+
 
             ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
             Call<MovieReviewResponse> call = apiService.getMovieReviews(mMovies.getId(), Constants.API_KEY);
@@ -144,25 +137,32 @@ public class ReviewsFragment extends Fragment {
                         Log.d(TAG, "onResponse: was successful");
                         mMovieReviewList = response.body().getResults();
                         // Display message for no trailers
-                        if (mMovieReviewList.isEmpty() && (mViewFragment.isShown())) { //Ojo
 
+                        if (mMovieReviewList.isEmpty()) {
+                            mMessage = getString(R.string.no_reviews_found);
+                            handleEmptyList(true);
 
-                            Toast.makeText(getContext(), "No existen Reviews", Toast.LENGTH_LONG).show();
+                        } else {
+                            mMessage = "";
+                            handleEmptyList(false);
+
                         }
 
                         if (mReviewAdapter == null) {
-                            Log.d(TAG, "onResponse: mReviewAdapter es Null");
+
                             mRecyclerView.setAdapter(new ReviewAdapter(mMovieReviewList, R.layout.list_item_review, getContext()));
                             mRecyclerView.setHasFixedSize(false);
                         } else {
-                            Log.d(TAG, "onResponse: mReviewAdapter no es null");
+
                             mReviewAdapter.updateRecyclerData(mMovieReviewList);
                             mReviewAdapter.notifyDataSetChanged();
                         }
                     } else {
                         Log.d(TAG, "onResponse: No network Available ");
                         mLoadingIndicator.setVisibility(View.INVISIBLE);
-                        //showMessage(getString(R.string.no_internet_error));
+                        mMessage = getString(R.string.no_internet_error);
+                        handleEmptyList(true);
+
                     }
                 }
 
@@ -170,27 +170,22 @@ public class ReviewsFragment extends Fragment {
                 public void onFailure(Call<MovieReviewResponse> call, Throwable t) {
                     Log.d(TAG, "onFailure: I'm here");
                     mLoadingIndicator.setVisibility(View.INVISIBLE);
-                    // Log error here since request failed
-                    //showMessage(getString(R.string.no_internet_error));
+                    mMessage = getString(R.string.no_internet_error);
+                    handleEmptyList(true);
 
                 }
             });
         } catch (Exception e) {
             Log.d(TAG, "LoadListReview: estoy en el Catch");
             mLoadingIndicator.setVisibility(View.INVISIBLE);
-            //showErrorMessage.setVisibility(View.VISIBLE);
-            //showMessage(getString(R.string.no_internet_error));
+            mMessage = getString(R.string.no_internet_error);
+            handleEmptyList(true);
+
         }
 
     }
 
-    /*private void showMessage(String msg) {
 
-        //loadingIndicator.setVisibility(View.INVISIBLE);
-        //recyclerView.setVisibility((View.INVISIBLE));
-        showErrorMessage.setText(msg);
-        showErrorMessage.setVisibility(View.VISIBLE);
-    }*/
 
     private void setupRecyclerViewLayout() {
 
@@ -214,6 +209,17 @@ public class ReviewsFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+    }
+
+
+    public void handleEmptyList(boolean isEmpty) {
+        if (isEmpty) {
+            mEmptyView.setText(mMessage);
+            mEmptyView.setVisibility(View.VISIBLE);
+        } else {
+            mEmptyView.setText("");
+            mEmptyView.setVisibility(View.GONE);
+        }
     }
 
 

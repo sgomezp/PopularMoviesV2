@@ -3,8 +3,11 @@ package com.example.android.popularmoviesV2.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
-import com.example.android.popularmoviesV2.data.MovieContract.*;
+import com.example.android.popularmoviesV2.data.MovieContract.MovieEntry;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by sgomezp on 11/04/2018.
@@ -30,10 +33,13 @@ public class MovieDbHelper extends SQLiteOpenHelper {
         // Create a table to hold favorite movies data
 
         final String SQL_CREATE_FAVORITE_TABLE = "CREATE TABLE " + MovieEntry.TABLE_NAME + " (" +
-                MovieEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                MovieEntry.COLUMN_THUMBNAIL + " TEXT NOT NULL, " +
+                MovieEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                MovieEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +
                 MovieEntry.COLUMN_MOVIE_TITLE + " TEXT NOT NULL, " +
-                "); ";
+                MovieEntry.COLUMN_THUMBNAIL + " TEXT NOT NULL);";
+
+        Log.d(TAG, "onCreate: CREATE_TABLE: " + SQL_CREATE_FAVORITE_TABLE);
+
         sqLiteDatabase.execSQL(SQL_CREATE_FAVORITE_TABLE);
 
 
@@ -50,4 +56,6 @@ public class MovieDbHelper extends SQLiteOpenHelper {
 
 
     }
+
+
 }

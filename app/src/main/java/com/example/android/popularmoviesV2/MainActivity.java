@@ -209,7 +209,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     //I don't know what to use here!!
 
                 }
-
+                break;
+            case R.id.favorites:
+                Intent favoriteIntent = new Intent(this, FavoriteActivity.class);
+                startActivity(favoriteIntent);
                 break;
             case R.id.action_settings:
                 Intent settingsIntent = new Intent(this, SettingActivity.class);

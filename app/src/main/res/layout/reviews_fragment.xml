@@ -24,22 +24,22 @@
         <!--Views when list has not items-->
 
         <TextView
-            android:id="@+id/empty_view"
+            android:id="@+id/empty_view_reviews"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:visibility="gone"
+            android:layout_margin="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:padding="50dp"
+            android:text="@string/no_reviews_found"
+            android:textAppearance="?android:textAppearanceMedium"
             tools:text="There are not items to show" />
 
 
-        <!--<TextView android:id="@+id/tv_empty_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text = "There are not items to show"/> -->
 
         <!--Loading indicator shown before first load -->
         <ProgressBar
