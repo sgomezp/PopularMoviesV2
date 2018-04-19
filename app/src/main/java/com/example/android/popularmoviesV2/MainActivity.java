@@ -54,11 +54,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private ProgressBar loadingIndicator;
 
 
-    /*
-     * References to RecyclerView and Adapter to reset the list to its
-     * "pretty" state when the reset menu item is clicked.
-     */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -148,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             mMovieAdapter.notifyDataSetChanged();
                         }
                     } else {
+                        loadingIndicator.setVisibility(View.INVISIBLE);
                         showMessage(getString(R.string.no_internet_error));
                     }
                 }
@@ -155,11 +151,13 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 @Override
                 public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
                     // Log error here since request failed
+
                     showMessage(getString(R.string.no_internet_error));
 
                 }
             });
         } catch (Exception e) {
+
             showMessage(getString(R.string.no_internet_error));
         }
     }

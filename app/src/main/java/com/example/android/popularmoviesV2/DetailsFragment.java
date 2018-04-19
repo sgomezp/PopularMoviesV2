@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +35,8 @@ public class DetailsFragment extends Fragment implements SwipeRefreshLayout.OnRe
     public static final String TAG = DetailsFragment.class.getSimpleName();
 
     public static Movies currentMovie;
+    private Animation mShowAnimation;
+    private DetailActivity mParentActivity;
 
     @BindView(R.id.posterThumbnail)
     ImageView posterThumbnail;
@@ -62,6 +66,7 @@ public class DetailsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         View rootView = inflater.inflate(R.layout.details_fragment, container, false);
 
         ButterKnife.bind(this, rootView);
+        mShowAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.image_anim);
 
         Bundle extras = getActivity().getIntent().getExtras();
 
@@ -93,6 +98,7 @@ public class DetailsFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     .placeholder(placeHolder)
                     .error(placeHolder)
                     .into(posterThumbnail);
+            posterThumbnail.startAnimation(mShowAnimation);
 
         }
 
