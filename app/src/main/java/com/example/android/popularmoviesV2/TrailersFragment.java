@@ -31,22 +31,19 @@ import retrofit2.Response;
 
 import static com.example.android.popularmoviesV2.utils.Constants.API_KEY;
 
-/**
- * Created by sgomezp on 08/04/2018.
- */
 
 public class TrailersFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = TrailersFragment.class.getSimpleName();
     public static List<MovieTrailer> mMovieTrailerList;
+    TextView mEmptyView;
+    String mMessage;
     private View mViewFragment;
     private Movies mMovies;
     private DetailActivity parentActivity;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private TrailerAdapter mTrailerAdapter;
-    TextView mEmptyView;
-    String mMessage;
 
     @Nullable
     @Override
@@ -103,10 +100,8 @@ public class TrailersFragment extends Fragment implements SwipeRefreshLayout.OnR
         }
         try {
             Log.d(TAG, "LoadListTrailer: He entrado al try");
-            //mSwipeRefreshLayout.setRefreshing(false);
-            //mLoadingIndicator.setVisibility(View.VISIBLE);
+
             mRecyclerView.setVisibility(View.VISIBLE);
-            //showErrorMessage.setVisibility(View.INVISIBLE);
 
             ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
             Call<MovieTrailerResponse> call = apiService.getMovieTrailers(mMovies.getId(), Constants.API_KEY);

@@ -182,7 +182,7 @@ public class MovieContentProvider extends ContentProvider {
         int favoriteDeleted; // starts as 0
 
         // Write the code to delete a single row of data
-        // [Hint] Use selections to delete an item by its row ID
+
         switch (match) {
             // Handle the single item case, recognized by the ID included in the URI path
             case FAVORITES_WITH_ID:

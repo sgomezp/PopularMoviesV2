@@ -42,16 +42,14 @@ public class ReviewsFragment extends Fragment {
     public static List<MovieReview> mMovieReviewList;
 
     DetailActivity parentActivity;
+    TextView mEmptyView;
+    String mMessage;
     private View mViewFragment;
     private Movies mMovies;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private ReviewAdapter mReviewAdapter;
     private ProgressBar mLoadingIndicator;
-    TextView mEmptyView;
-    String mMessage;
-
-
     private MovieReviewResponse mMovieReviewResponse;
 
     public ReviewsFragment() {
@@ -83,12 +81,7 @@ public class ReviewsFragment extends Fragment {
             mMovies = MainActivity.movies.get(position);
             Log.d(TAG, "onCreateView: position movies:" + mMovies.getId());
 
-
-            //mMovieReviewList = mMovies.getId();
         }
-
-
-
 
         // Set RecyclerView Layout
         setupRecyclerViewLayout();
@@ -111,7 +104,6 @@ public class ReviewsFragment extends Fragment {
 
         if (API_KEY.isEmpty()) {
             Log.d(TAG, "LoadListReview: Please obtain your API Key");
-            //showMessage(getString(R.string.api_missing_error));
             mMessage = getString(R.string.api_missing_error);
             handleEmptyList(true);
             return;
@@ -186,7 +178,6 @@ public class ReviewsFragment extends Fragment {
     }
 
 
-
     private void setupRecyclerViewLayout() {
 
         Log.d(TAG, "setupRecyclerViewLayout: parentActivity is: " + parentActivity);
@@ -196,7 +187,7 @@ public class ReviewsFragment extends Fragment {
         mRecyclerView = mViewFragment.findViewById(R.id.list_review);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
-        //mRecyclerView.setAdapter(mReviewAdapter);
+
     }
 
 

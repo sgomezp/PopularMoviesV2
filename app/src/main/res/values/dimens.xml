@@ -9,4 +9,15 @@
     <dimen name="height_poster">255dp</dimen>
     <dimen name="height_100">100dp</dimen>
     <dimen name="elevation">4dp</dimen>
+    <dimen name="tab_height">52dp</dimen>
+    <dimen name="tab_indicator_height">3dp</dimen>
+    <dimen name="tab_padding">12dp</dimen>
+    <dimen name="margin_top_rv">60dp</dimen>
+    <dimen name="toolbar_height">60dp</dimen>
+    <dimen name="zero_dp">0dp</dimen>
+    <dimen name="max_height_poster">250dp</dimen>
+    <dimen name="no_items_margin">30dp</dimen>
+    <dimen name="no_items_padding">50dp</dimen>
+    <dimen name="favorites_70_dp">70dp</dimen>
+    <dimen name="margin_linearlayout_movies">0.5dp</dimen>
 </resources>

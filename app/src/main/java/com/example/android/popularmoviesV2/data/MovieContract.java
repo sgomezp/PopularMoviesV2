@@ -3,9 +3,6 @@ package com.example.android.popularmoviesV2.data;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-/**
- * Created by sgomezp on 11/04/2018.
- */
 
 public class MovieContract {
 

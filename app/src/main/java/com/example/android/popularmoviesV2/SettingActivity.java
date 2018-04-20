@@ -13,7 +13,7 @@ import android.support.v7.widget.Toolbar;
 public class SettingActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
 
@@ -33,11 +33,11 @@ public class SettingActivity extends AppCompatActivity {
 
     }
 
-    public static  class MoviesPreferenceFragment extends PreferenceFragment implements
-    Preference.OnPreferenceChangeListener{
+    public static class MoviesPreferenceFragment extends PreferenceFragment implements
+            Preference.OnPreferenceChangeListener {
 
         @Override
-        public void onCreate(Bundle savedInstanceState){
+        public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.settings_main);
 
@@ -49,15 +49,15 @@ public class SettingActivity extends AppCompatActivity {
         private void bindPreferenceSummaryToValue(Preference preference) {
             preference.setOnPreferenceChangeListener(this);
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(preference.getContext());
-            String preferenceString = preferences.getString(preference.getKey(),"");
+            String preferenceString = preferences.getString(preference.getKey(), "");
             onPreferenceChange(preference, preferenceString);
         }
 
         @Override
-        public boolean onPreferenceChange(Preference preference, Object value){
+        public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
             preference.setSummary(stringValue);
-            return  true;
+            return true;
 
         }
 

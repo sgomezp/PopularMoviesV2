@@ -68,29 +68,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
                 .into(holder.favoriteThumbnail);
 
 
-        // Move the mCursor to the position of the item to be displayed
-       /* if (!mCursor.moveToPosition(position))
-            return;*/
-
-        // Update the view holder with the information needed to display
-        /*String movieTitle = mCursor.getString(mCursor.
-                getColumnIndex(MovieContract.MovieEntry.COLUMN_MOVIE_TITLE));
-        String favoriteThumbnail = mCursor.getString(mCursor.
-                getColumnIndex(MovieContract.MovieEntry.COLUMN_THUMBNAIL));*/
-
-        // Retrieve the id from the cursor and display the movie Title and thumbnail
-
-        /*long id = mCursor.getLong(mCursor.getColumnIndex(MovieContract.MovieEntry._ID));
-        holder.favoriteMovieTitle.setText(movieTitle);
-        holder.itemView.setTag(id);
-        String favoriteThumbUrl = Uri.parse(favoriteThumbnail).toString();
-
-        Picasso.with(mContext)
-                .load(favoriteThumbUrl)
-                .placeholder(R.drawable.default_placeholder)
-                .error(R.drawable.default_placeholder)
-                .into(holder.favoriteThumbnail);*/
-
     }
 
     @Override
@@ -120,14 +97,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
         }
         return temp;
 
-
-        /*// Always close the previous mCursor first
-        if (mCursor != null) mCursor.close();
-        mCursor = newCursor;
-        if (newCursor != null) {
-            // Force the RecyclerView to refresh
-            this.notifyDataSetChanged();
-        }*/
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

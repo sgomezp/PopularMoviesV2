@@ -9,9 +9,6 @@ import com.example.android.popularmoviesV2.data.MovieContract.MovieEntry;
 
 import static android.content.ContentValues.TAG;
 
-/**
- * Created by sgomezp on 11/04/2018.
- */
 
 public class MovieDbHelper extends SQLiteOpenHelper {
 

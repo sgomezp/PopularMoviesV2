@@ -54,7 +54,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/label_read_more"
             android:paddingEnd="@dimen/margin_10"
-            android:paddingStart="0dp"
+            android:paddingStart="@dimen/zero_dp"
             android:paddingTop="@dimen/margin_10" />
 
     </com.ms.square.android.expandabletextview.ExpandableTextView>

@@ -5,9 +5,6 @@ import android.util.Log;
 import com.example.android.popularmoviesV2.utils.Constants;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by sgomezp on 27/03/2018.
- */
 
 public class MovieTrailer {
 

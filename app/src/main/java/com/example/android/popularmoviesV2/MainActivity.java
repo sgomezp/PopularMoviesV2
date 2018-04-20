@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private ProgressBar loadingIndicator;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -136,7 +137,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         movies = response.body().getResults();
 
                         if (mMovieAdapter == null) {
-                            recyclerView.setAdapter(new MovieAdapter(movies, R.layout.linearlayout_movies, getApplicationContext()));
+                            recyclerView.setAdapter(new MovieAdapter(movies, R.layout.linearlayout_movies,
+                                    getApplicationContext()));
                             recyclerView.setHasFixedSize(false);
                         } else {
                             mMovieAdapter.updateRecyclerData(movies);
@@ -231,6 +233,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
 
     }
+
+
 }
 
 

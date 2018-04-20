@@ -4,9 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-/**
- * Created by sgomezp on 27/03/2018.
- */
 
 public class MovieReviewResponse {
 
@@ -19,11 +16,6 @@ public class MovieReviewResponse {
     @SerializedName("results")
     private List<MovieReview> results;
 
-    /*private MovieReviewResponse(int movieId, int page, List<MovieReview> movieReviewList){
-        this.movieId = movieId;
-        this.page = page;
-        this.results = movieReviewList;
-    }*/
 
     // Getters and Setters Methods
 

@@ -17,6 +17,12 @@ public class Utils {
     public static final String DATE_IN = "yyyy-MM-dd";
     public static final String DATE_OUT = "dd MMM yyyy";
 
+    private void Utils() {
+
+    }
+
+    // Method to convert date in format "yyyy-mm-dd" to "dd MMM yyyy"
+
     public static String FormatDate(Context context, String dateToFormat) {
         String resultDate = "";
 
@@ -33,12 +39,6 @@ public class Utils {
         }
 
         return resultDate;
-    }
-
-    // Method to convert date in format "yyyy-mm-dd" to "dd MMM yyyy"
-
-    private void Utils() {
-
     }
 
 

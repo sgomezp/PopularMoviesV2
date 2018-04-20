@@ -20,10 +20,7 @@ public class Movies {
     private String releaseDate;
 
 
-    /*private  int mImageResource;
-    private  String mImageUrl;
-    private  int mTitle;
-    private  int mSynopsis;*/
+
 
     public Movies(int movieId, String posterPath, String originalTitle, String overview, Double voteAverage, String releaseDate) {
         this.movieId = movieId;
@@ -62,11 +59,11 @@ public class Movies {
         return voteAverage;
     }
 
-    public void setVoteAverage(Double voteAverage){
+    public void setVoteAverage(Double voteAverage) {
         this.voteAverage = voteAverage;
     }
 
-    public String getReleaseDate(){
+    public String getReleaseDate() {
         return  releaseDate;
     }
 
@@ -77,5 +74,9 @@ public class Movies {
 
     public int getId() {
         return movieId;
+    }
+
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
     }
 }

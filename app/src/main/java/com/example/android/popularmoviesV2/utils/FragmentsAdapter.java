@@ -10,9 +10,6 @@ import com.example.android.popularmoviesV2.DetailsFragment;
 import com.example.android.popularmoviesV2.ReviewsFragment;
 import com.example.android.popularmoviesV2.TrailersFragment;
 
-/**
- * Created by sgomezp on 30/03/2018.
- */
 
 public class FragmentsAdapter extends FragmentPagerAdapter {
 
@@ -76,20 +73,6 @@ public class FragmentsAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         // Generate title based on item position
         return tabTitles[position];
-
-
-        /*if (position == 0) {
-            return "Details";
-
-        } else {
-            if (position == 1) {
-                return "Reviews";
-
-            } else {
-                return "Trailers";
-            }
-
-        }*/
 
     }
 

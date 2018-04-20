@@ -17,14 +17,14 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="@dimen/tab_height"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/colorAccent"
-        app:tabIndicatorHeight="3dp"
-        app:tabMaxWidth="0dp"
+        app:tabIndicatorHeight="@dimen/tab_indicator_height"
+        app:tabMaxWidth="@dimen/zero_dp"
         app:tabMode="fixed"
-        app:tabPadding="12dp"
-        app:tabPaddingEnd="12dp"
+        app:tabPadding="@dimen/tab_padding"
+        app:tabPaddingEnd="@dimen/tab_padding"
         app:tabSelectedTextColor="@android:color/white" />
 
     <android.support.v4.view.ViewPager

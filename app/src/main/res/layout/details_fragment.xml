@@ -20,7 +20,7 @@
             android:layout_alignParentTop="true"
             android:adjustViewBounds="true"
             android:contentDescription="@string/description_poster_thumbnail"
-            android:maxHeight="250dp"
+            android:maxHeight="@dimen/max_height_poster"
             android:scaleType="centerCrop" />
 
 

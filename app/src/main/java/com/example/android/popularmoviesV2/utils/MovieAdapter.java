@@ -2,7 +2,6 @@ package com.example.android.popularmoviesV2.utils;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +16,10 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 
-public  class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
+
 
     private static final String TAG = MovieAdapter.class.getSimpleName();
-
 
 
     //private final Movies[] mMovies;
@@ -31,12 +30,15 @@ public  class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>
 
     /**
      * Constructor for MovieAdapter that accepts a number of items to display and the specification
-     * for the ListItemClickListener.*/
+     * for the ListItemClickListener.
+     */
 
-    public MovieAdapter(List<Movies> movies, int gridLayout, Context context){
+    public MovieAdapter(List<Movies> movies, int gridLayout, Context context) {
         this.mMovies = movies;
         this.gridLayout = gridLayout;
         this.mContext = context;
+
+
     }
 
     @Override
@@ -54,10 +56,8 @@ public  class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-
         //Get the data model based on position
 
-        //final Movies movie = mMovies[position];
 
         final Movies movie = mMovies.get(position);
         ViewHolder itemViewHolder = holder;
@@ -83,33 +83,27 @@ public  class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>
         return mMovies.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView viewHolderPoster;
-        Drawable placeHolder;
+        //Drawable placeHolder;
         View gridLayout;
 
-        /**
-         * Constructor for our ViewHolder.
-         */
+        // Constructor for ViewHolder
 
-        private ViewHolder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
             gridLayout = itemView;
-
-            //Use itemView.findViewById to get a reference to imageview_poster
             viewHolderPoster = itemView.findViewById(R.id.imageview_poster);
             itemView.setOnClickListener(this);
 
         }
 
+
         //Handles the row being clicked
         @Override
-        public void  onClick(View view){
+        public void onClick(View view) {
             int position = getAdapterPosition(); // gets item position
-            if (position != RecyclerView.NO_POSITION){ // Check if an item was deleted, but user clicked it before the UI removed it
-                Movies movie = mMovies.get(position);
-
+            if (position != RecyclerView.NO_POSITION) { // Check if an item was deleted, but user clicked it before the UI removed it
                 // We can access the data within the views
                 Intent intent = new Intent(mContext.getApplicationContext(), DetailActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
@@ -119,5 +113,6 @@ public  class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>
             }
         }
     }
+
 
 }

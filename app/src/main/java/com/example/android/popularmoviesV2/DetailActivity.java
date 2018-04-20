@@ -35,7 +35,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private static final int LOADER_ID = 0;
 
 
-
     public static Movies currentMovie;
     @BindView(R.id.sliding_tabs)
     TabLayout tabLayout;
@@ -81,8 +80,11 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         }
 
         if (extras != null) {
+
             int position = extras.getInt("position");
+
             currentMovie = MainActivity.movies.get(position);
+
 
         }
 

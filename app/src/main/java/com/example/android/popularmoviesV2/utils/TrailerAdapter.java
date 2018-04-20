@@ -21,9 +21,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by sgomezp on 07/04/2018.
- */
 
 public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerViewHolder> {
 
@@ -35,8 +32,6 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
     private int mLayout;
     private Context mContext;
 
-
-    //private  MovieTrailer movieTrailer = null;
 
     public TrailerAdapter(List<MovieTrailer> movieTrailerList, int layout, Context context) {
         mMovieTrailerList = movieTrailerList;

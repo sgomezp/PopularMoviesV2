@@ -18,7 +18,7 @@
         android:name="com.example.android.popularmoviesV2.SettingActivity$MoviesPreferenceFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginTop="@dimen/tab_height"
         android:orientation="horizontal"
         tools:context=".SettingActivity" />
 </android.support.constraint.ConstraintLayout>

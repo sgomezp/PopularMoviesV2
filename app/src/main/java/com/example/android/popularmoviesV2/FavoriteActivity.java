@@ -31,8 +31,6 @@ public class FavoriteActivity extends AppCompatActivity implements
     private FavoritesAdapter mAdapter;
     private TextView mTextViewEmptyList;
 
-    //private SQLiteDatabase mDb;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
